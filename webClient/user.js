@@ -1,13 +1,18 @@
 var myLat, myLon;
 var busLat, busLon;
 
-var conn = new WebSocket("ws://localhost:8080/Processador/websocketendpoint");
+var conn = new WebSocket("ws://localhost:8080/websocketendpoint");
+
+conn.onopen = function(){
+    var p = document.getElementById('mensagem');
+    p.innerHTML += '<br>Conectado ao servidor.';
+}
 
 conn.onclose = function(){
     var p = document.getElementById('mensagem');
     document.getElementById('buses').disabled = true;
     document.getElementById('botao').disabled = true;
-    p.innerHTML = 'Erro na conexão. Recarregue a página.';
+    p.innerHTML += '<br>Erro na conexão. Recarregue a página.';
 }
 
 conn.onmessage = function(res){
@@ -23,7 +28,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition);
     } 
     else {
-    x.innerHTML = "Geolocation is not supported by this browser.";
+    x.innerHTML += "<br>Geolocation is not supported by this browser.";
     }
 }
 
@@ -34,7 +39,7 @@ function showPosition(position) {
     "<br>Longitude: " + myLon;
 }
 
-var linhas = ["Linha1", "Linha2"];
+var linhas = ["1111", "2222", "3333"];
 
 function initList(){
 
@@ -58,7 +63,7 @@ function waitForBus(){
     var bus = select.options[select.selectedIndex].text;
 
     var p = document.getElementById('mensagem');
-    p.innerHTML = "Aguardando " + bus;
+    p.innerHTML += "<br>Aguardando " + bus;
 }
 
 function isClose(){
